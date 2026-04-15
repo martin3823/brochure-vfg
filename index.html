@@ -1,94 +1,139 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VFG Brochure</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VFG Brochure</title>
 
-  <style>
-    body {
-      margin: 0;
-      background: #111;
-      font-family: sans-serif;
-    }
+<style>
+body {
+  margin: 0;
+  background: #000;
+  overflow-x: hidden;
+}
 
-    .container {
-      max-width: 900px;
-      margin: auto;
-      position: relative;
-    }
+/* Container */
+.container {
+  max-width: 900px;
+  margin: auto;
+}
 
-    img {
-      width: 100%;
-      display: block;
-      cursor: zoom-in;
-      transition: transform 0.3s ease;
-    }
+/* Ảnh */
+img {
+  width: 100%;
+  display: block;
+  cursor: pointer;
+}
 
-    img:hover {
-      transform: scale(1.01);
-    }
+/* Fullscreen mode */
+.fullscreen-mode {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
 
-    /* Nút fullscreen */
-    .fullscreen-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: rgba(255,255,255,0.9);
-      border: none;
-      padding: 10px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
-    }
+/* Ảnh khi fullscreen */
+.fullscreen-mode img {
+  width: auto;
+  height: 100%;
+  max-width: none;
+}
 
-    /* Overlay fullscreen */
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #000;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
+/* Nút */
+.btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
-    .overlay img {
-      max-width: 100%;
-      max-height: 100%;
-      cursor: zoom-out;
-    }
-  </style>
+/* Gợi ý xoay */
+.rotate-hint {
+  text-align: center;
+  color: #aaa;
+  font-size: 12px;
+  padding: 8px;
+}
+</style>
 </head>
 
 <body>
 
-<div class="container">
-  <img id="mainImg" src="brochure.jpg" alt="VFG Brochure">
+<div class="rotate-hint">Xoay ngang để xem rõ hơn</div>
+
+<div class="container" id="viewer">
+  <img id="img" src="brochure.jpg">
 </div>
 
-<button class="fullscreen-btn" onclick="openFullscreen()">Xem toàn màn hình</button>
-
-<div class="overlay" id="overlay" onclick="closeFullscreen()">
-  <img src="brochure.jpg">
-</div>
+<button class="btn" onclick="enterFullscreen()">Fullscreen</button>
 
 <script>
-  const overlay = document.getElementById('overlay');
+const viewer = document.getElementById("viewer");
+const img = document.getElementById("img");
 
-  function openFullscreen() {
-    overlay.style.display = 'flex';
+/* ===== FULLSCREEN ===== */
+function enterFullscreen() {
+  viewer.classList.add("fullscreen-mode");
+
+  if (viewer.requestFullscreen) {
+    viewer.requestFullscreen();
   }
 
-  function closeFullscreen() {
-    overlay.style.display = 'none';
+  lockLandscape();
+}
+
+function exitFullscreen() {
+  viewer.classList.remove("fullscreen-mode");
+
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
   }
 
-  // Click ảnh cũng mở fullscreen
-  document.getElementById("mainImg").onclick = openFullscreen;
+  unlockOrientation();
+}
+
+/* Click ảnh = fullscreen */
+img.onclick = enterFullscreen;
+
+/* Click ngoài thoát */
+viewer.onclick = exitFullscreen;
+
+/* ===== AUTO ROTATE HANDLING ===== */
+function checkOrientation() {
+  if (window.innerWidth > window.innerHeight) {
+    // Landscape
+    viewer.classList.add("fullscreen-mode");
+  } else {
+    viewer.classList.remove("fullscreen-mode");
+  }
+}
+
+window.addEventListener("resize", checkOrientation);
+checkOrientation();
+
+/* ===== LOCK ORIENTATION (Android only) ===== */
+function lockLandscape() {
+  if (screen.orientation && screen.orientation.lock) {
+    screen.orientation.lock("landscape").catch(() => {});
+  }
+}
+
+function unlockOrientation() {
+  if (screen.orientation && screen.orientation.unlock) {
+    screen.orientation.unlock();
+  }
+}
 </script>
 
 </body>
