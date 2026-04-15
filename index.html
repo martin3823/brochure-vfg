@@ -8,25 +8,88 @@
   <style>
     body {
       margin: 0;
-      background: #ffffff;
+      background: #111;
+      font-family: sans-serif;
     }
 
     .container {
       max-width: 900px;
       margin: auto;
+      position: relative;
     }
 
     img {
       width: 100%;
-      height: auto;
       display: block;
+      cursor: zoom-in;
+      transition: transform 0.3s ease;
+    }
+
+    img:hover {
+      transform: scale(1.01);
+    }
+
+    /* Nút fullscreen */
+    .fullscreen-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.9);
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    /* Overlay fullscreen */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .overlay img {
+      max-width: 100%;
+      max-height: 100%;
+      cursor: zoom-out;
     }
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <img src="brochure.jpg" alt="VFG Brochure">
-  </div>
+
+<div class="container">
+  <img id="mainImg" src="brochure.jpg" alt="VFG Brochure">
+</div>
+
+<button class="fullscreen-btn" onclick="openFullscreen()">Xem toàn màn hình</button>
+
+<div class="overlay" id="overlay" onclick="closeFullscreen()">
+  <img src="brochure.jpg">
+</div>
+
+<script>
+  const overlay = document.getElementById('overlay');
+
+  function openFullscreen() {
+    overlay.style.display = 'flex';
+  }
+
+  function closeFullscreen() {
+    overlay.style.display = 'none';
+  }
+
+  // Click ảnh cũng mở fullscreen
+  document.getElementById("mainImg").onclick = openFullscreen;
+</script>
+
 </body>
 </html>
