@@ -10,19 +10,18 @@
   
   body, html {
     margin: 0; padding: 0;
-    width: 100%;
-    /* Sử dụng min-height: 100% để linh hoạt hơn trên mobile */
-    min-height: 100%;
+    width: 100%; height: 100%; /* Cần chiều cao 100% để căn giữa */
     background: #f8f8f8;
   }
 
   .main-wrapper {
-    /* Quan trọng: Dùng flex nhưng cho phép cuộn tự nhiên */
+    width: 100%;
+    min-height: 100%; /* Cho phép giãn ra nếu ảnh dài */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 20px 15px; /* Thêm padding dưới để không bị sát mép */
-    width: 100%;
+    justify-content: center; /* Căn giữa theo chiều dọc */
+    align-items: center;     /* Căn giữa theo chiều ngang */
+    padding: 30px 15px;      /* Padding an toàn */
   }
 
   .content-box {
@@ -31,12 +30,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Loại bỏ margin: auto để ảnh bắt đầu từ trên xuống một cách tự nhiên */
+    /* Không dùng margin: auto nữa vì đã có justify-content ở trên */
   }
 
   .hint-text {
     display: none;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     font-family: sans-serif;
     font-size: 14px;
     color: #888;
@@ -57,19 +56,22 @@
     border-radius: 4px;
   }
 
-  /* Fix cho ảnh dọc trên Desktop */
+  /* Tối ưu riêng cho Desktop */
   @media (min-width: 1024px) {
-    .main-wrapper { 
-      padding: 50px 40px; 
-      min-height: 100vh;
-      justify-content: center; /* Chỉ căn giữa trên máy tính */
+    .main-wrapper {
+      padding: 50px;
     }
     img.is-portrait {
-      max-width: 1000px; /* Thu nhỏ thêm một chút để sắc nét hơn */
+      max-width: 500px;
     }
   }
 
+  /* Khi xoay ngang điện thoại, đảm bảo không bị cắt */
   @media (orientation: landscape) {
+    .main-wrapper {
+      justify-content: flex-start; /* Ưu tiên bắt đầu từ trên để dễ cuộn nếu màn hình thấp */
+      padding: 20px;
+    }
     .hint-text { display: none !important; }
   }
 </style>
