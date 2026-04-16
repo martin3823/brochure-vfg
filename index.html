@@ -5,66 +5,63 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>VFG Brochure</title>
 
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background: #ffffff;
-      overflow-x: hidden; /* Tránh bị lệch trang khi xoay */
-    }
+ <style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    /* Căn giữa toàn bộ nội dung trong trang */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100vw;
-      height: 100vh;
-    }
+  .container {
+    width: 100%;
+    max-width: 1200px; /* Giới hạn độ rộng để không bị quá to trên máy tính */
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+  }
 
-    img {
-      max-width: 100%;
-      height: auto;
-      transition: transform 0.3s ease; /* Hiệu ứng xoay mượt mà */
-    }
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* Thêm một chút đổ bóng cho giống brochure thật (tùy chọn) */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
 
-    /* --- XỬ LÝ CHO ĐIỆN THOẠI (MÀN HÌNH DỌC) --- */
-    @media (max-width: 1023px) and (orientation: portrait) {
-      img {
-        /* Xoay ảnh 90 độ để tận dụng chiều cao màn hình điện thoại */
-        transform: rotate(90deg);
-        /* Scale lại một chút để ảnh không bị mất cạnh sau khi xoay */
-        width: 90vh; 
-        height: auto;
-        object-fit: contain;
-      }
-      
-      /* Hiện thông báo nhỏ nhắc người dùng */
-      body::before {
-        content: "Vui lòng xem ở chế độ ngang để rõ nhất";
-        position: absolute;
-        top: 10px;
-        width: 100%;
-        text-align: center;
-        font-size: 12px;
-        color: #888;
-        z-index: 10;
-      }
-    }
+  /* Thông báo nhắc nhở nhẹ nhàng ở trên cùng */
+  .hint-text {
+    position: fixed;
+    top: 20px;
+    width: 100%;
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #888;
+    pointer-events: none; /* Không làm vướng khi chạm vào màn hình */
+  }
 
-    /* --- XỬ LÝ CHO MÁY TÍNH HOẶC ĐIỆN THOẠI XOAY NGANG --- */
-    @media (min-width: 1024px) or (orientation: landscape) {
-      img {
-        transform: rotate(0deg);
-        width: 100%;
-        max-width: 1200px; /* Giới hạn độ rộng trên máy tính để không bị quá to */
-      }
+  /* Ẩn dòng chữ nhắc nhở khi trên máy tính hoặc khi đã xoay ngang điện thoại */
+  @media (min-width: 1024px) or (orientation: landscape) {
+    .hint-text {
+      display: none;
     }
-  </style>
-</head>
+  }
+</style>
 
 <body>
+  <div class="hint-text">Vui lòng xem ở chế độ ngang để rõ nhất</div>
+  
+  <div class="container">
+    <img src="brochure.jpg" alt="VFG Brochure">
+  </div>
+</body>
   <div class="container">
     <img src="brochure.jpg" alt="VFG Brochure">
   </div>
