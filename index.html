@@ -2,68 +2,76 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VFG Brochure</title>
-
- <style>
-  body, html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    background: #ffffff;
-    /* Căn giữa toàn bộ nội dung trong trang */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .container {
-    width: 100%;
-    max-width: 1200px; /* Giới hạn độ rộng để không bị quá to trên máy tính */
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-  }
-
-  img {
-    width: 100%;
-    height: auto;
-    display: block;
-    /* Thêm một chút đổ bóng cho giống brochure thật (tùy chọn) */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  }
-
-  /* Thông báo nhắc nhở nhẹ nhàng ở trên cùng */
-  .hint-text {
-    position: fixed;
-    top: 20px;
-    width: 100%;
-    text-align: center;
-    font-family: sans-serif;
-    font-size: 14px;
-    color: #888;
-    pointer-events: none; /* Không làm vướng khi chạm vào màn hình */
-  }
-
-  /* Ẩn dòng chữ nhắc nhở khi trên máy tính hoặc khi đã xoay ngang điện thoại */
-  @media (min-width: 1024px) or (orientation: landscape) {
-    .hint-text {
-      display: none;
+  <style>
+    /* Reset cơ bản để không bị thừa lề */
+    * {
+      box-sizing: border-box;
     }
-  }
-</style>
+    
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #f8f8f8; /* Đổi sang xám nhạt để nổi bật brochure trắng */
+    }
 
+    /* Container chính chiếm toàn bộ màn hình */
+    .main-wrapper {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column; /* Xếp thông báo trên, ảnh dưới */
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .hint-text {
+      margin-bottom: 20px; /* Tạo khoảng cách với ảnh */
+      font-family: sans-serif;
+      font-size: 14px;
+      color: #888;
+      text-align: center;
+    }
+
+    .img-container {
+      width: 100%;
+      max-width: 1000px; /* Giới hạn để không quá to trên desktop */
+      display: flex;
+      justify-content: center;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Đổ bóng sang trọng */
+      border-radius: 4px;
+    }
+
+    /* Ẩn chữ nhắc nhở khi máy nằm ngang hoặc màn hình lớn */
+    @media (min-width: 1024px) or (orientation: landscape) {
+      .hint-text {
+        display: none;
+      }
+      .main-wrapper {
+        padding: 40px;
+      }
+    }
+  </style>
+</head>
 <body>
-  <div class="hint-text">Vui lòng xem ở chế độ ngang để rõ nhất</div>
-  
-  <div class="container">
-    <img src="brochure.jpg" alt="VFG Brochure">
+
+  <div class="main-wrapper">
+    <div class="hint-text">🔄 Vui lòng xoay ngang máy để xem rõ hơn</div>
+    
+    <div class="img-container">
+      <img src="brochure.jpg" alt="VFG Brochure">
+    </div>
   </div>
-</body>
-  <div class="container">
-    <img src="brochure.jpg" alt="VFG Brochure">
-  </div>
+
 </body>
 </html>
