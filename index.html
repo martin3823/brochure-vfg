@@ -6,70 +6,73 @@
   <title>VFG Brochure</title>
   
   <style>
-    * { box-sizing: border-box; }
-    
-    body, html {
-      margin: 0; padding: 0;
-      width: 100%; min-height: 100vh;
-      background: #f8f8f8;
-    }
+  * { box-sizing: border-box; }
+  
+  body, html {
+    margin: 0; padding: 0;
+    width: 100%;
+    /* Sử dụng min-height: 100% để linh hoạt hơn trên mobile */
+    min-height: 100%;
+    background: #f8f8f8;
+  }
 
-    .main-wrapper {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      padding: 15px;
-    }
+  .main-wrapper {
+    /* Quan trọng: Dùng flex nhưng cho phép cuộn tự nhiên */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 15px; /* Thêm padding dưới để không bị sát mép */
+    width: 100%;
+  }
 
-    .content-box {
-      margin: auto;
-      width: 100%;
-      max-width: 1920px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+  .content-box {
+    width: 100%;
+    max-width: 1920px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Loại bỏ margin: auto để ảnh bắt đầu từ trên xuống một cách tự nhiên */
+  }
 
-    /* Style cho dòng thông báo */
-    .hint-text {
-      display: none; /* Mặc định ẩn */
-      margin-bottom: 15px;
-      font-family: sans-serif;
-      font-size: 14px;
-      color: #888;
-      text-align: center;
-    }
+  .hint-text {
+    display: none;
+    margin-bottom: 15px;
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #888;
+    text-align: center;
+  }
 
-    /* Chỉ hiện thông báo khi: là Mobile + Đang cầm dọc + Có class 'show-hint' */
-    @media (max-width: 1023px) and (orientation: portrait) {
-      .hint-text.show-hint {
-        display: block;
-      }
-    }
-
-    img {
-      width: 100%;
-      height: auto;
+  @media (max-width: 1023px) and (orientation: portrait) {
+    .hint-text.show-hint {
       display: block;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      border-radius: 4px;
-      transition: max-width 0.3s ease;
     }
+  }
 
-    /* Class đặc biệt dành cho ảnh dọc trên máy tính */
-    @media (min-width: 1024px) {
-      .main-wrapper { padding: 40px; }
-      
-      /* Nếu là ảnh dọc trên desktop, giới hạn lại khoảng 500px-600px để không bị vỡ */
-      img.is-portrait {
-        max-width: 1000px; 
-      }
-    }
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border-radius: 4px;
+  }
 
-    @media (orientation: landscape) {
-      .hint-text { display: none !important; }
+  /* Fix cho ảnh dọc trên Desktop */
+  @media (min-width: 1024px) {
+    .main-wrapper { 
+      padding: 50px 40px; 
+      min-height: 100vh;
+      justify-content: center; /* Chỉ căn giữa trên máy tính */
     }
-  </style>
+    img.is-portrait {
+      max-width: 1000px; /* Thu nhỏ thêm một chút để sắc nét hơn */
+    }
+  }
+
+  @media (orientation: landscape) {
+    .hint-text { display: none !important; }
+  }
+</style>
 </head>
 <body>
 
