@@ -2,30 +2,63 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>VFG Brochure</title>
 
   <style>
-    body {
+    body, html {
       margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
       background: #ffffff;
+      overflow-x: hidden; /* Tránh bị lệch trang khi xoay */
     }
 
     .container {
-      width: 100%;
-      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      height: 100vh;
     }
 
     img {
-      width: 100%;
+      max-width: 100%;
       height: auto;
-      display: block;
+      transition: transform 0.3s ease; /* Hiệu ứng xoay mượt mà */
     }
 
-    /* Desktop: hiển thị full */
-    @media (min-width: 1024px) {
-      .container {
-        max-width: none; /* bỏ giới hạn */
+    /* --- XỬ LÝ CHO ĐIỆN THOẠI (MÀN HÌNH DỌC) --- */
+    @media (max-width: 1023px) and (orientation: portrait) {
+      img {
+        /* Xoay ảnh 90 độ để tận dụng chiều cao màn hình điện thoại */
+        transform: rotate(90deg);
+        /* Scale lại một chút để ảnh không bị mất cạnh sau khi xoay */
+        width: 90vh; 
+        height: auto;
+        object-fit: contain;
+      }
+      
+      /* Hiện thông báo nhỏ nhắc người dùng */
+      body::before {
+        content: "Vui lòng xem ở chế độ ngang để rõ nhất";
+        position: absolute;
+        top: 10px;
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+        color: #888;
+        z-index: 10;
+      }
+    }
+
+    /* --- XỬ LÝ CHO MÁY TÍNH HOẶC ĐIỆN THOẠI XOAY NGANG --- */
+    @media (min-width: 1024px) or (orientation: landscape) {
+      img {
+        transform: rotate(0deg);
+        width: 100%;
+        max-width: 1200px; /* Giới hạn độ rộng trên máy tính để không bị quá to */
       }
     }
   </style>
