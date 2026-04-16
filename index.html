@@ -2,41 +2,37 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VFG Brochure</title>
   
   <style>
-    /* Reset lề mặc định của trình duyệt */
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     
     body, html {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      min-height: 100vh;
+      margin: 0; padding: 0;
+      width: 100%; min-height: 100vh;
       background: #f8f8f8;
     }
 
-    /* Khung ngoài cùng bọc toàn bộ trang */
     .main-wrapper {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      padding: 10px; /* Giảm padding một chút để ảnh to hơn trên mobile */
+      padding: 15px;
     }
 
-    /* Khung chứa nội dung */
     .content-box {
       margin: auto;
       width: 100%;
       max-width: 1920px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    /* Mặc định là ẨN dòng chữ nhắc nhở */
+    /* Style cho dòng thông báo */
     .hint-text {
-      display: none;
+      display: none; /* Mặc định ẩn */
       margin-bottom: 15px;
       font-family: sans-serif;
       font-size: 14px;
@@ -44,31 +40,34 @@
       text-align: center;
     }
 
-    /* Chỉ hiện khi là màn hình nhỏ (Mobile) VÀ đang cầm dọc */
+    /* Chỉ hiện thông báo khi: là Mobile + Đang cầm dọc + Có class 'show-hint' */
     @media (max-width: 1023px) and (orientation: portrait) {
-      .hint-text {
+      .hint-text.show-hint {
         display: block;
       }
     }
 
-    /* Thiết lập cho ảnh brochure */
     img {
       width: 100%;
       height: auto;
       display: block;
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
       border-radius: 4px;
+      transition: max-width 0.3s ease;
     }
 
-    /* Cấu hình riêng cho máy tính và khi xoay ngang điện thoại */
-    @media (min-width: 1024px) or (orientation: landscape) {
-      .main-wrapper {
-        padding: 30px; 
+    /* Class đặc biệt dành cho ảnh dọc trên máy tính */
+    @media (min-width: 1024px) {
+      .main-wrapper { padding: 40px; }
+      
+      /* Nếu là ảnh dọc trên desktop, giới hạn lại khoảng 500px-600px để không bị vỡ */
+      img.is-portrait {
+        max-width: 550px; 
       }
-      /* Đảm bảo dòng chữ luôn ẩn ở đây */
-      .hint-text {
-        display: none !important;
-      }
+    }
+
+    @media (orientation: landscape) {
+      .hint-text { display: none !important; }
     }
   </style>
 </head>
@@ -76,27 +75,39 @@
 
   <div class="main-wrapper">
     <div class="content-box">
-      <div class="hint-text">🔄 Vui lòng xoay ngang máy để xem rõ hơn</div>
+      <div id="hint" class="hint-text">🔄 Vui lòng xoay ngang máy để xem rõ hơn</div>
       
       <img id="brochureImage" src="" alt="VFG Brochure">
     </div>
   </div>
 
   <script>
-    // Logic Random Ảnh
     document.addEventListener("DOMContentLoaded", function() {
-      // 1. Khai báo danh sách các file ảnh
+      // 1. Khai báo danh sách ảnh kèm theo kiểu dáng
       const imageList = [
-        "brochure.jpg",           // Phiên bản ngang
-        "brochure-portrait.jpg"  // Phiên bản dọc (NHỚ TẠO FILE NÀY)
+        { src: "brochure.jpg", type: "landscape" },        // Ảnh ngang
+        { src: "brochure-portrait.jpg", type: "portrait" } // Ảnh dọc
       ];
 
-      // 2. Chọn ngẫu nhiên một chỉ số (0 hoặc 1)
-      const randomIndex = Math.floor(Math.random() * imageList.length);
+      // 2. Random
+      const randomItem = imageList[Math.floor(Math.random() * imageList.length)];
+      
+      const imgElement = document.getElementById("brochureImage");
+      const hintElement = document.getElementById("hint");
 
-      // 3. Gán file ảnh ngẫu nhiên vào thẻ <img>
-      const brochureImg = document.getElementById("brochureImage");
-      brochureImg.src = imageList[randomIndex];
+      // 3. Gán ảnh
+      imgElement.src = randomItem.src;
+
+      // 4. Kiểm tra logic để hiển thị UI tương ứng
+      if (randomItem.type === "portrait") {
+        // Nếu là ảnh dọc: Thêm class để thu nhỏ trên desktop và KHÔNG hiện thông báo xoay
+        imgElement.classList.add("is-portrait");
+        hintElement.classList.remove("show-hint");
+      } else {
+        // Nếu là ảnh ngang: Cho phép hiện thông báo xoay trên mobile dọc
+        imgElement.classList.remove("is-portrait");
+        hintElement.classList.add("show-hint");
+      }
     });
   </script>
 
