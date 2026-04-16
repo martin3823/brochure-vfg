@@ -5,61 +5,68 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VFG Brochure</title>
   
-  <style>
-    /* Reset lề mặc định của trình duyệt */
-    * {
-      box-sizing: border-box;
-    }
-    
-    body, html {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      min-height: 100vh; /* Đảm bảo tối thiểu bằng chiều cao màn hình */
-      background: #f8f8f8;
-    }
+ <style>
+  * {
+    box-sizing: border-box;
+  }
+  
+  body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    background: #f8f8f8;
+  }
 
-    /* Khung ngoài cùng bọc toàn bộ trang */
-    .main-wrapper {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      padding: 15px; /* Khoảng cách lề an toàn cho điện thoại */
-    }
+  .main-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 10px; /* Giảm padding một chút để ảnh to hơn trên mobile */
+  }
 
-    /* Khung chứa nội dung - Dùng margin: auto để chống lỗi cắt phần trên */
-    .content-box {
-      margin: auto;
-      width: 100%;
-      max-width: 1920px; /* Điểm chốt an toàn để ảnh không to lố trên tivi/màn hình cong */
-    }
+  .content-box {
+    margin: auto;
+    width: 100%;
+    max-width: 1920px;
+  }
 
+  /* 1. MẶC ĐỊNH LÀ ẨN DÒNG CHỮ NÀY */
+  .hint-text {
+    display: none; 
+    margin-bottom: 15px;
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #888;
+    text-align: center;
+  }
+
+  /* 2. CHỈ HIỆN KHI LÀ MÀN HÌNH NHỎ (MOBILE) VÀ ĐANG CẦM DỌC */
+  @media (max-width: 1023px) and (orientation: portrait) {
     .hint-text {
-      margin-bottom: 15px;
-      font-family: sans-serif;
-      font-size: 14px;
-      color: #888;
-      text-align: center;
-    }
-
-    /* Thiết lập cho ảnh brochure */
-    img {
-      width: 100%; /* Bung full kích thước của khung chứa */
-      height: auto; /* Giữ nguyên tỷ lệ ảnh gốc */
       display: block;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15); /* Đổ bóng cho giống ấn phẩm in */
     }
+  }
 
-    /* Cấu hình riêng cho máy tính và khi xoay ngang điện thoại */
-    @media (min-width: 1024px) or (orientation: landscape) {
-      .hint-text {
-        display: none; /* Ẩn dòng nhắc nhở đi */
-      }
-      .main-wrapper {
-        padding: 40px; /* Tăng lề viền ngoài trên máy tính để thiết kế có không gian "thở" */
-      }
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border-radius: 4px;
+  }
+
+  /* Cấu hình cho máy tính hoặc khi đã xoay ngang */
+  @media (min-width: 1024px) or (orientation: landscape) {
+    .main-wrapper {
+      padding: 30px; 
     }
-  </style>
+    /* Đảm bảo dòng chữ luôn ẩn ở đây */
+    .hint-text {
+      display: none !important;
+    }
+  }
+</style>
 </head>
 <body>
 
