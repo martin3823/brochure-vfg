@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="vi">
-  
 <head>
 
-  
-  <!-- Google tag (gtag.js) -->
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XTLZ17D21"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -14,121 +12,178 @@
   gtag('config', 'G-4XTLZ17D21');
 </script>
 
-  
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VFG Brochure</title>
-  
-  <style>
-  * { box-sizing: border-box; }
-  
-  body, html {
-    margin: 0; padding: 0;
-    width: 100%; height: 100%; /* Cần chiều cao 100% để căn giữa */
-    background: #f8f8f8;
-  }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VFG Brochure</title>
 
-  .main-wrapper {
-    width: 100%;
-    min-height: 100%; /* Cho phép giãn ra nếu ảnh dài */
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Căn giữa theo chiều dọc */
-    align-items: center;     /* Căn giữa theo chiều ngang */
-    padding: 30px 15px;      /* Padding an toàn */
-  }
+<style>
+* { box-sizing: border-box; }
 
-  .content-box {
-    width: 100%;
-    max-width: 1920px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* Không dùng margin: auto nữa vì đã có justify-content ở trên */
-  }
+body, html {
+  margin: 0; padding: 0;
+  width: 100%; height: 100%;
+  background: #f8f8f8;
+}
 
-  .hint-text {
-    display: none;
-    margin-bottom: 20px;
-    font-family: sans-serif;
-    font-size: 14px;
-    color: #888;
-    text-align: center;
-  }
+.main-wrapper {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 15px;
+}
 
-  @media (max-width: 1023px) and (orientation: portrait) {
-    .hint-text.show-hint {
-      display: block;
-    }
-  }
+.content-box {
+  width: 100%;
+  max-width: 1920px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  img {
-    width: 100%;
-    height: auto;
+.hint-text {
+  display: none;
+  margin-bottom: 20px;
+  font-family: sans-serif;
+  font-size: 14px;
+  color: #888;
+  text-align: center;
+}
+
+@media (max-width: 1023px) and (orientation: portrait) {
+  .hint-text.show-hint {
     display: block;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    border-radius: 4px;
   }
+}
 
-  /* Tối ưu riêng cho Desktop */
-  @media (min-width: 1024px) {
-    .main-wrapper {
-      padding: 50px;
-    }
-    img.is-portrait {
-      max-width: 1000px;
-    }
-  }
+img {
+  width: 100%;
+  height: auto;
+  display: block;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  border-radius: 4px;
+}
 
-  /* Khi xoay ngang điện thoại, đảm bảo không bị cắt */
-  @media (orientation: landscape) {
-    .main-wrapper {
-      justify-content: flex-start; /* Ưu tiên bắt đầu từ trên để dễ cuộn nếu màn hình thấp */
-      padding: 20px;
-    }
-    .hint-text { display: none !important; }
+/* CTA */
+.cta-section {
+  margin-top: 30px;
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+.cta-main {
+  display: block;
+  background: #0068ff;
+  color: #fff;
+  padding: 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.cta-secondary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.cta-secondary a {
+  color: #444;
+  text-decoration: none;
+}
+
+@media (min-width: 1024px) {
+  img.is-portrait {
+    max-width: 1000px;
   }
+}
+
 </style>
 </head>
+
 <body>
 
-  <div class="main-wrapper">
-    <div class="content-box">
-      <div id="hint" class="hint-text">🔄 Vui lòng xoay ngang máy để xem rõ hơn</div>
-      
-      <img id="brochureImage" src="" alt="VFG Brochure">
+<div class="main-wrapper">
+  <div class="content-box">
+
+    <div id="hint" class="hint-text">🔄 Vui lòng xoay ngang máy để xem rõ hơn</div>
+
+    <img id="brochureImage" src="" alt="VFG Brochure">
+
+    <!-- CTA -->
+    <div class="cta-section">
+
+      <!-- MAIN CTA -->
+      <a href="https://zalo.me/0931950605" class="cta-main"
+         onclick="gtag('event','click_zalo',{event_category:'engagement'});">
+        👉 Nhận tư vấn nhanh qua Zalo
+      </a>
+
+      <!-- FORM -->
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfDzJJCNEodqHBMdhroKRQHH6LZwNtemmyuIkXCyhe2JxTEnQ/viewform?usp=sharing&ouid=117381462687040849913"
+         onclick="gtag('event','click_form',{event_category:'engagement'});">
+        📩 Để lại thông tin nhận báo giá
+      </a>
+
+      <!-- SECONDARY -->
+      <div class="cta-secondary">
+        <a href="https://facebook.com/yourpage"
+           onclick="gtag('event','click_facebook',{event_category:'engagement'});">
+          Xem Fanpage
+        </a>
+
+        <a href="mailto:studio@sdc.vn"
+           onclick="gtag('event','click_email',{event_category:'engagement'});">
+          Gửi email
+        </a>
+      </div>
+
     </div>
+
   </div>
+</div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // 1. Khai báo danh sách ảnh kèm theo kiểu dáng
-      const imageList = [
-        { src: "brochure.jpg", type: "landscape" },        // Ảnh ngang
-        { src: "brochure-portrait.jpg", type: "portrait" } // Ảnh dọc
-      ];
+<script>
+document.addEventListener("DOMContentLoaded", function() {
 
-      // 2. Random
-      const randomItem = imageList[Math.floor(Math.random() * imageList.length)];
-      
-      const imgElement = document.getElementById("brochureImage");
-      const hintElement = document.getElementById("hint");
+  const imageList = [
+    { src: "brochure.jpg", type: "landscape" },
+    { src: "brochure-portrait.jpg", type: "portrait" }
+  ];
 
-      // 3. Gán ảnh
-      imgElement.src = randomItem.src;
+  const randomItem = imageList[Math.floor(Math.random() * imageList.length)];
+  
+  const imgElement = document.getElementById("brochureImage");
+  const hintElement = document.getElementById("hint");
 
-      // 4. Kiểm tra logic để hiển thị UI tương ứng
-      if (randomItem.type === "portrait") {
-        // Nếu là ảnh dọc: Thêm class để thu nhỏ trên desktop và KHÔNG hiện thông báo xoay
-        imgElement.classList.add("is-portrait");
-        hintElement.classList.remove("show-hint");
-      } else {
-        // Nếu là ảnh ngang: Cho phép hiện thông báo xoay trên mobile dọc
-        imgElement.classList.remove("is-portrait");
-        hintElement.classList.add("show-hint");
-      }
-    });
-  </script>
+  imgElement.src = randomItem.src;
+
+  if (randomItem.type === "portrait") {
+    imgElement.classList.add("is-portrait");
+    hintElement.classList.remove("show-hint");
+  } else {
+    imgElement.classList.remove("is-portrait");
+    hintElement.classList.add("show-hint");
+  }
+
+  // Scroll tracking
+  window.addEventListener("scroll", function() {
+    const scrollY = window.scrollY;
+    const height = document.body.scrollHeight - window.innerHeight;
+    const percent = Math.round((scrollY / height) * 100);
+
+    if (percent > 50 && !window.tracked50) {
+      gtag('event', 'scroll_50', {event_category:'engagement'});
+      window.tracked50 = true;
+    }
+  });
+
+});
+</script>
 
 </body>
 </html>
