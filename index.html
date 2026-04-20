@@ -2,6 +2,7 @@
 <html lang="vi">
 <head>
 
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XTLZ17D21"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -21,6 +22,9 @@ body, html {
   margin: 0; padding: 0;
   width: 100%; height: 100%;
   background: #f8f8f8;
+
+  /* tránh bị CTA che */
+  padding-bottom: 140px;
 }
 
 .main-wrapper {
@@ -63,78 +67,77 @@ img {
   border-radius: 4px;
 }
 
-/* --- CTA SECTION --- */
+/* ================= CTA FLOATING ================= */
+
 .cta-section {
-  margin-top: 40px;
-  margin-bottom: 40px;
-  text-align: center;
-  width: 100%;
-  max-width: 600px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  font-family: sans-serif;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 420px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  padding: 12px;
+  z-index: 999;
+
+  transition: 0.3s;
 }
 
-.btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px 24px;
-  border-radius: 12px;
+/* MAIN CTA */
+.cta-main {
+  display: block;
+  background: linear-gradient(135deg, #0068ff, #0052cc);
+  color: #fff;
+  padding: 14px;
+  border-radius: 10px;
   text-decoration: none;
   font-weight: bold;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin-bottom: 10px;
+  text-align: center;
+  transition: 0.2s;
 }
 
-.btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+.cta-main:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,104,255,0.4);
 }
 
-.btn-primary {
-  background: #0068ff;
-  color: #fff;
-}
-
-.btn-secondary {
-  background: #fff;
-  color: #f26d3d;
-  border: 2px solid #f26d3d;
-}
-
-.cta-tertiary {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  margin-top: 10px;
-}
-
-.cta-tertiary a {
-  color: #555;
+/* FORM */
+.cta-section > a:not(.cta-main) {
+  display: block;
+  background: #f2f4f7;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 8px;
   text-decoration: none;
-  font-size: 15px;
-  font-weight: 500;
-  transition: color 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
+  color: #333;
+  font-size: 14px;
 }
 
-.cta-tertiary a:hover {
-  color: #0068ff;
-  text-decoration: underline;
+/* SECONDARY */
+.cta-secondary {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
 }
 
-@media (max-width: 480px) {
-  .btn {
-    font-size: 15px;
-    padding: 14px 20px;
-  }
-  .cta-tertiary {
-    gap: 20px;
+.cta-secondary a {
+  color: #666;
+  text-decoration: none;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .cta-section {
+    bottom: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    max-width: none;
+    border-radius: 16px 16px 0 0;
   }
 }
 
@@ -156,31 +159,34 @@ img {
 
     <img id="brochureImage" src="" alt="VFG Brochure">
 
-    <div class="cta-section">
-      <a href="https://zalo.me/0931950605" class="btn btn-primary"
-         onclick="gtag('event','click_zalo',{event_category:'engagement'});">
-        👉 Nhận tư vấn nhanh qua Zalo
-      </a>
-
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfDzJJCNEodqHBMdhroKRQHH6LZwNtemmyuIkXCyhe2JxTEnQ/viewform?usp=sharing&ouid=117381462687040849913" 
-         class="btn btn-secondary"
-         onclick="gtag('event','click_form',{event_category:'engagement'});">
-        📩 Để lại thông tin nhận báo giá
-      </a>
-
-      <div class="cta-tertiary">
-        <a href="https://facebook.com/yourpage"
-           onclick="gtag('event','click_facebook',{event_category:'engagement'});">
-          🔗 Xem Fanpage
-        </a>
-        <a href="mailto:studio@sdc.vn"
-           onclick="gtag('event','click_email',{event_category:'engagement'});">
-          📧 Gửi email
-        </a>
-      </div>
-    </div>
-
   </div>
+</div>
+
+<!-- CTA FLOATING -->
+<div class="cta-section" id="ctaBox">
+
+  <a href="https://zalo.me/0931950605" class="cta-main"
+     onclick="gtag('event','click_zalo',{event_category:'engagement'});">
+    👉 Nhận tư vấn nhanh qua Zalo
+  </a>
+
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSfDzJJCNEodqHBMdhroKRQHH6LZwNtemmyuIkXCyhe2JxTEnQ/viewform?usp=sharing&ouid=117381462687040849913"
+     onclick="gtag('event','click_form',{event_category:'engagement'});">
+    📩 Để lại thông tin nhận báo giá
+  </a>
+
+  <div class="cta-secondary">
+    <a href="https://facebook.com/yourpage"
+       onclick="gtag('event','click_facebook',{event_category:'engagement'});">
+      Fanpage
+    </a>
+
+    <a href="mailto:studio@sdc.vn"
+       onclick="gtag('event','click_email',{event_category:'engagement'});">
+      Email
+    </a>
+  </div>
+
 </div>
 
 <script>
@@ -215,6 +221,21 @@ document.addEventListener("DOMContentLoaded", function() {
     if (percent > 50 && !window.tracked50) {
       gtag('event', 'scroll_50', {event_category:'engagement'});
       window.tracked50 = true;
+    }
+  });
+
+  // OPTIONAL: Ẩn CTA khi chưa scroll
+  const cta = document.getElementById("ctaBox");
+  cta.style.opacity = "0";
+  cta.style.pointerEvents = "none";
+
+  window.addEventListener("scroll", function() {
+    if (window.scrollY > 200) {
+      cta.style.opacity = "1";
+      cta.style.pointerEvents = "auto";
+    } else {
+      cta.style.opacity = "0";
+      cta.style.pointerEvents = "none";
     }
   });
 
