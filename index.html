@@ -2,7 +2,6 @@
 <html lang="vi">
 <head>
 
-<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XTLZ17D21"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -22,9 +21,11 @@ body, html {
   margin: 0; padding: 0;
   width: 100%; height: 100%;
   background: #f8f8f8;
-
-  /* tránh bị CTA che */
-  padding-bottom: 140px;
+  
+  /* Cần thiết để khối CTA neo lại (dock) ở cuối trang */
+  position: relative; 
+  /* Tạo khoảng trống ở cuối để CTA không che mất phần đáy của brochure */
+  padding-bottom: 140px; 
 }
 
 .main-wrapper {
@@ -33,7 +34,7 @@ body, html {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px 15px;
+  padding: 30px 15px 0; /* Bỏ padding-bottom vì body đã có */
 }
 
 .content-box {
@@ -71,7 +72,7 @@ img {
 
 .cta-section {
   position: fixed;
-  bottom: 20px;
+  bottom: -150px; /* Bắt đầu từ ngoài màn hình để có hiệu ứng trượt lên */
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
@@ -80,64 +81,82 @@ img {
   backdrop-filter: blur(10px);
   border-radius: 14px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  padding: 12px;
+  padding: 16px;
   z-index: 999;
-
-  transition: 0.3s;
+  
+  /* Hiệu ứng xuất hiện mượt mà */
+  opacity: 0;
+  transition: bottom 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+  
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-/* MAIN CTA */
-.cta-main {
-  display: block;
-  background: linear-gradient(135deg, #0068ff, #0052cc);
-  color: #fff;
+/* Class được add bằng JS khi load trang xong */
+.cta-section.show {
+  bottom: 20px;
+  opacity: 1;
+}
+
+/* Class được add bằng JS khi cuộn đến cuối trang */
+.cta-section.docked {
+  position: absolute;
+  bottom: 20px; /* Sẽ nằm gọn trong vùng padding-bottom 140px của body */
+}
+
+/* Nút bấm chung */
+.cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 14px;
   border-radius: 10px;
   text-decoration: none;
   font-weight: bold;
-  margin-bottom: 10px;
+  font-family: sans-serif;
+  font-size: 15px;
   text-align: center;
-  transition: 0.2s;
+  transition: all 0.3s ease;
 }
 
-.cta-main:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0,104,255,0.4);
+/* MAIN CTA (Nút Zalo) */
+.cta-primary {
+  background: #0068ff; /* Mã màu chuẩn của Zalo */
+  color: #fff;
 }
 
-/* FORM */
-.cta-section > a:not(.cta-main) {
-  display: block;
+.cta-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 104, 255, 0.4); /* Dropshadow màu xanh Zalo */
+}
+
+/* FORM CTA (Nút nhận báo giá) */
+.cta-secondary-btn {
   background: #f2f4f7;
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 8px;
-  text-decoration: none;
   color: #333;
-  font-size: 14px;
 }
 
-/* SECONDARY */
-.cta-secondary {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-}
-
-.cta-secondary a {
-  color: #666;
-  text-decoration: none;
+.cta-secondary-btn:hover {
+  transform: translateY(-3px);
+  background: #e4e7ec;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* MOBILE */
 @media (max-width: 768px) {
   .cta-section {
-    bottom: 0;
     left: 0;
-    transform: none;
+    transform: none; /* Bỏ căn giữa translateX để tránh lỗi hiển thị 100% width */
     width: 100%;
     max-width: none;
     border-radius: 16px 16px 0 0;
+  }
+  .cta-section.show {
+    bottom: 0;
+  }
+  .cta-section.docked {
+    bottom: 0;
   }
 }
 
@@ -146,7 +165,6 @@ img {
     max-width: 1000px;
   }
 }
-
 </style>
 </head>
 
@@ -154,39 +172,23 @@ img {
 
 <div class="main-wrapper">
   <div class="content-box">
-
-    <div id="hint" class="hint-text">🔄 Vui lòng xoay ngang máy để xem rõ hơn</div>
+    <div id="hint" class="hint-text">Vui lòng xoay ngang máy để xem rõ hơn</div>
 
     <img id="brochureImage" src="" alt="VFG Brochure">
-
   </div>
 </div>
 
-<!-- CTA FLOATING -->
 <div class="cta-section" id="ctaBox">
-
-  <a href="https://zalo.me/0931950605" class="cta-main"
+  <a href="https://zalo.me/0931950605" class="cta-btn cta-primary"
      onclick="gtag('event','click_zalo',{event_category:'engagement'});">
-    👉 Nhận tư vấn nhanh qua Zalo
+    Nhận tư vấn nhanh qua Zalo
   </a>
 
   <a href="https://docs.google.com/forms/d/e/1FAIpQLSfDzJJCNEodqHBMdhroKRQHH6LZwNtemmyuIkXCyhe2JxTEnQ/viewform?usp=sharing&ouid=117381462687040849913"
+     class="cta-btn cta-secondary-btn"
      onclick="gtag('event','click_form',{event_category:'engagement'});">
-    📩 Để lại thông tin nhận báo giá
+    Để lại thông tin nhận báo giá
   </a>
-
-  <div class="cta-secondary">
-    <a href="https://facebook.com/yourpage"
-       onclick="gtag('event','click_facebook',{event_category:'engagement'});">
-      Fanpage
-    </a>
-
-    <a href="mailto:studio@sdc.vn"
-       onclick="gtag('event','click_email',{event_category:'engagement'});">
-      Email
-    </a>
-  </div>
-
 </div>
 
 <script>
@@ -212,30 +214,32 @@ document.addEventListener("DOMContentLoaded", function() {
     hintElement.classList.add("show-hint");
   }
 
-  // Scroll tracking
+  // --- LOGIC HIỂN THỊ CTA ---
+  const cta = document.getElementById("ctaBox");
+
+  // 1. Hiệu ứng trượt lên ngay khi vào trang (sau 100ms)
+  setTimeout(() => {
+    cta.classList.add("show");
+  }, 100);
+
+  // 2. Scroll tracking & tự động tách khi chạm đáy
   window.addEventListener("scroll", function() {
     const scrollY = window.scrollY;
-    const height = document.body.scrollHeight - window.innerHeight;
-    const percent = Math.round((scrollY / height) * 100);
-
+    const innerHeight = window.innerHeight;
+    const docHeight = document.documentElement.scrollHeight;
+    
+    // Tracking Analytics 50%
+    const percent = Math.round((scrollY / (docHeight - innerHeight)) * 100);
     if (percent > 50 && !window.tracked50) {
       gtag('event', 'scroll_50', {event_category:'engagement'});
       window.tracked50 = true;
     }
-  });
 
-  // OPTIONAL: Ẩn CTA khi chưa scroll
-  const cta = document.getElementById("ctaBox");
-  cta.style.opacity = "0";
-  cta.style.pointerEvents = "none";
-
-  window.addEventListener("scroll", function() {
-    if (window.scrollY > 200) {
-      cta.style.opacity = "1";
-      cta.style.pointerEvents = "auto";
+    // Logic tách CTA (Docking): Nếu cuộn xuống cách đáy 20px thì cho khối cố định ở cuối trang
+    if (scrollY + innerHeight >= docHeight - 20) {
+      cta.classList.add('docked');
     } else {
-      cta.style.opacity = "0";
-      cta.style.pointerEvents = "none";
+      cta.classList.remove('docked');
     }
   });
 
