@@ -147,22 +147,21 @@ img {
   }
 }
 
-/* ================= TÙY CHỈNH RIÊNG CHẾ ĐỘ XOAY NGANG (ĐIỆN THOẠI/TABLET) ================= */
+/* ================= TÙY CHỈNH RIÊNG CHẾ ĐỘ XOAY NGANG ================= */
 @media (max-width: 1024px) and (orientation: landscape) {
   .main-wrapper {
-    padding-bottom: 30px; /* Bỏ padding dư thừa đi vì CTA không còn nổi nữa */
+    padding-bottom: 30px; 
   }
   
-  /* Ép CTA thành khối tĩnh (cứng) */
   .cta-section, .cta-section.show, .cta-section.docked {
     position: relative !important;
     bottom: auto !important;
     left: auto !important;
     transform: none !important;
-    opacity: 1 !important; /* Luôn hiển thị ngay lập tức */
+    opacity: 1 !important; 
     width: 100%;
     max-width: 500px;
-    margin-top: 30px; /* Khoảng trắng ngăn cách với brochure */
+    margin-top: 30px; 
     background: transparent !important;
     box-shadow: none !important;
     backdrop-filter: none !important;
@@ -188,19 +187,35 @@ img {
 
   <div class="cta-section" id="ctaBox">
     <a href="https://zalo.me/0931950605" class="cta-btn cta-primary"
-       onclick="gtag('event','click_zalo',{event_category:'engagement'});">
+       onclick="trackAndGo(event, 'click_zalo', this.href, 'zalo_button');">
       Nhận tư vấn nhanh qua Zalo
     </a>
 
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSfDzJJCNEodqHBMdhroKRQHH6LZwNtemmyuIkXCyhe2JxTEnQ/viewform?usp=sharing&ouid=117381462687040849913"
        class="cta-btn cta-secondary-btn"
-       onclick="gtag('event','click_form',{event_category:'engagement'});">
+       onclick="trackAndGo(event, 'click_form', this.href, 'form_button');">
       Để lại thông tin nhận báo giá
     </a>
   </div>
 </div>
 
 <script>
+// --- HÀM HỖ TRỢ TRACKING GA ---
+function trackAndGo(e, eventName, url, label) {
+  e.preventDefault(); // Chặn việc chuyển trang ngay lập tức
+  
+  // Gửi sự kiện cho Google Analytics
+  gtag('event', eventName, {
+    event_category: 'cta',
+    event_label: label
+  });
+  
+  // Đợi 200ms để GA gửi tín hiệu xong mới chuyển trang
+  setTimeout(() => {
+    window.location.href = url;
+  }, 200);
+}
+
 document.addEventListener("DOMContentLoaded", function() {
 
   const imageList = [
@@ -230,7 +245,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const innerHeight = window.innerHeight;
     const docHeight = document.documentElement.scrollHeight;
     
-    // Logic dock chỉ có tác dụng khi ở dạng dọc (vì dạng ngang đã bị CSS ép thành relative)
     if (scrollY + innerHeight >= docHeight - 5) {
       cta.classList.add('docked');
     } else {
@@ -238,7 +252,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-// 1. Hiệu ứng trượt lên sau 1.5 giây (1500ms)
   setTimeout(() => {
     cta.classList.add("show");
     checkDock(); 
@@ -251,8 +264,12 @@ document.addEventListener("DOMContentLoaded", function() {
     
     const percent = Math.round((scrollY / (docHeight - innerHeight)) * 100);
     if (percent > 50 && !window.tracked50) {
-      gtag('event', 'scroll_50', {event_category:'engagement'});
-      window.tracked50 = true;
+      window.tracked50 = true; // Set cờ ngay lập tức để không bị lặp
+      
+      // Delay sự kiện scroll 500ms để đảm bảo session_start được gửi trước
+      setTimeout(() => {
+        gtag('event', 'scroll_50', { event_category: 'engagement' });
+      }, 500);
     }
 
     checkDock();
