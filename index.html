@@ -2,13 +2,11 @@
 <html lang="vi">
 <head>
 
-<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-4XTLZ17D21"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-4XTLZ17D21');
 </script>
 
@@ -65,35 +63,79 @@ img {
   border-radius: 4px;
 }
 
-/* CTA */
+/* --- CTA SECTION --- */
 .cta-section {
-  margin-top: 30px;
+  margin-top: 40px;
+  margin-bottom: 40px;
   text-align: center;
   width: 100%;
-  max-width: 500px;
-}
-
-.cta-main {
-  display: block;
-  background: #0068ff;
-  color: #fff;
-  padding: 14px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
-
-.cta-secondary {
+  max-width: 600px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  font-size: 14px;
+  gap: 15px;
+  font-family: sans-serif;
 }
 
-.cta-secondary a {
-  color: #444;
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px;
+  border-radius: 12px;
   text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+}
+
+.btn-primary {
+  background: #0068ff;
+  color: #fff;
+}
+
+.btn-secondary {
+  background: #fff;
+  color: #f26d3d;
+  border: 2px solid #f26d3d;
+}
+
+.cta-tertiary {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 10px;
+}
+
+.cta-tertiary a {
+  color: #555;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cta-tertiary a:hover {
+  color: #0068ff;
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .btn {
+    font-size: 15px;
+    padding: 14px 20px;
+  }
+  .cta-tertiary {
+    gap: 20px;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -114,34 +156,28 @@ img {
 
     <img id="brochureImage" src="" alt="VFG Brochure">
 
-    <!-- CTA -->
     <div class="cta-section">
-
-      <!-- MAIN CTA -->
-      <a href="https://zalo.me/0931950605" class="cta-main"
+      <a href="https://zalo.me/0931950605" class="btn btn-primary"
          onclick="gtag('event','click_zalo',{event_category:'engagement'});">
         👉 Nhận tư vấn nhanh qua Zalo
       </a>
 
-      <!-- FORM -->
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfDzJJCNEodqHBMdhroKRQHH6LZwNtemmyuIkXCyhe2JxTEnQ/viewform?usp=sharing&ouid=117381462687040849913"
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSfDzJJCNEodqHBMdhroKRQHH6LZwNtemmyuIkXCyhe2JxTEnQ/viewform?usp=sharing&ouid=117381462687040849913" 
+         class="btn btn-secondary"
          onclick="gtag('event','click_form',{event_category:'engagement'});">
         📩 Để lại thông tin nhận báo giá
       </a>
 
-      <!-- SECONDARY -->
-      <div class="cta-secondary">
+      <div class="cta-tertiary">
         <a href="https://facebook.com/yourpage"
            onclick="gtag('event','click_facebook',{event_category:'engagement'});">
-          Xem Fanpage
+          🔗 Xem Fanpage
         </a>
-
         <a href="mailto:studio@sdc.vn"
            onclick="gtag('event','click_email',{event_category:'engagement'});">
-          Gửi email
+          📧 Gửi email
         </a>
       </div>
-
     </div>
 
   </div>
