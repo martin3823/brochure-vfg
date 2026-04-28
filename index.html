@@ -278,6 +278,81 @@ document.addEventListener("DOMContentLoaded", function() {
   window.addEventListener("resize", checkDock);
 
 });
+  // ===== DETECT ZALO + LANDSCAPE → SHOW FLOAT HINT =====
+
+function isZalo() {
+  return /Zalo/i.test(navigator.userAgent);
+}
+
+function isLandscape() {
+  return window.innerWidth > window.innerHeight;
+}
+
+let browserHintShown = false;
+
+function showBrowserHint() {
+  // tránh tạo nhiều lần
+  if (document.getElementById("browserHint")) return;
+
+  const el = document.createElement("div");
+  el.id = "browserHint";
+
+  el.innerHTML = `
+    <div style="font-weight:600;">⚠️ Zalo hạn chế xoay ngang</div>
+    <div style="font-size:13px;opacity:0.85;">
+      Mở bằng Chrome/Safari để xem đầy đủ
+    </div>
+  `;
+
+  Object.assign(el.style, {
+    position: "fixed",
+    top: "20px",
+    left: "50%",
+    transform: "translateX(-50%) translateY(-10px)",
+    background: "rgba(0,0,0,0.85)",
+    color: "#fff",
+    padding: "12px 16px",
+    borderRadius: "12px",
+    fontSize: "14px",
+    zIndex: 9999,
+    backdropFilter: "blur(6px)",
+    boxShadow: "0 8px 24px rgba(0,0,0,0.2)",
+    opacity: 0,
+    transition: "all 0.3s ease"
+  });
+
+  document.body.appendChild(el);
+
+  requestAnimationFrame(() => {
+    el.style.opacity = 1;
+    el.style.transform = "translateX(-50%) translateY(0)";
+  });
+
+  setTimeout(() => {
+    el.style.opacity = 0;
+    el.style.transform = "translateX(-50%) translateY(-10px)";
+    setTimeout(() => el.remove(), 300);
+  }, 3500);
+}
+
+function checkZaloLandscape() {
+  if (isZalo() && isLandscape() && !browserHintShown) {
+    browserHintShown = true;
+    showBrowserHint();
+  }
+
+  // reset nếu quay lại dọc
+  if (!isLandscape()) {
+    browserHintShown = false;
+  }
+}
+
+// chạy sau khi load
+setTimeout(checkZaloLandscape, 1200);
+
+// nghe khi xoay / resize
+window.addEventListener("resize", checkZaloLandscape);
+window.addEventListener("orientationchange", checkZaloLandscape);
 </script>
 
 </body>
